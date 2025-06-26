@@ -17,9 +17,9 @@
         @layer base {
             /* Define custom CSS variables for easy color management */
             :root {
-                --color-deep-navy: #1a1a2e; /* Lighter dark shade for Home section */
-                --color-subtle-navy: #2c2c54; /* Noticeably lighter navy for About Me section */
-                --color-dark-navy: #1a1a2e; /* Original main background for other sections (now matches home) */
+                --color-deep-navy: #0a0a1a; /* Darkest for hero section base */
+                --color-subtle-navy: #1a1a2e; /* Slightly lighter for 'about' */
+                --color-dark-navy: #131325; /* General background for other sections */
                 --color-teal-accent: #00ffd5; /* The bright accent color */
                 --color-pink-accent: #ff007f; /* A new pink accent for section titles, based on image */
                 --color-text-light: #d1d5db; /* Light gray for general text */
@@ -28,6 +28,7 @@
                 --color-skill-card-bg: #2c3e50; /* A darker blue for skill cards as seen in the image */
                 --color-project-card-bg: #2c3e50; /* Specific background for project cards */
                 --color-project-tag-bg: #3c4a60; /* Background for tech stack tags in projects */
+                --color-particle: rgba(0, 255, 213, 0.3); /* Transparent teal for particles */
             }
             body {
                 background-color: var(--color-dark-navy); /* Default body background */
@@ -36,37 +37,118 @@
                 -webkit-font-smoothing: antialiased;
                 -moz-osx-font-smoothing: grayscale;
             }
-            /* Custom classes based on the provided image and previous CSS */
+
+            /* Custom Scrollbar */
+            body::-webkit-scrollbar {
+                width: 8px;
+            }
+            body::-webkit-scrollbar-track {
+                background: var(--color-deep-navy);
+            }
+            body::-webkit-scrollbar-thumb {
+                background-color: var(--color-teal-accent);
+                border-radius: 4px;
+                border: 2px solid var(--color-deep-navy);
+            }
+
+            /* General highlight text */
             .highlight-text {
                 color: var(--color-teal-accent);
                 font-weight: 600; /* Semi-bold for highlight */
             }
+
+            /* Section Backgrounds */
+            #home {
+                background-color: var(--color-deep-navy); /* Base for particles */
+            }
+            #about {
+                background-color: var(--color-subtle-navy);
+            }
+            #skills, #projects, #contact, #experience {
+                background-color: var(--color-dark-navy); /* Consistent darker color for other sections */
+            }
+            
+            /* Sticky Header with Frosted Glass */
+            .header-glassmorphism {
+                background-color: rgba(26, 26, 46, 0.8); /* Slightly less opaque than before */
+                backdrop-filter: blur(8px); /* Frosted glass effect */
+                -webkit-backdrop-filter: blur(8px); /* Safari compatibility */
+            }
+
+            /* Button Hover Effects */
+            .btn-primary, .btn-secondary {
+                position: relative;
+                overflow: hidden;
+                z-index: 1; /* Ensure text is above ripple/shine */
+                transition: all 0.3s ease;
+            }
+            .btn-primary {
+                background-color: var(--color-teal-accent);
+                color: var(--color-dark-navy);
+            }
+            .btn-secondary {
+                border: 2px solid var(--color-teal-accent);
+                color: var(--color-teal-accent);
+            }
+
+            /* Shine Effect on Buttons */
+            .btn-primary:after, .btn-secondary:after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: rgba(255, 255, 255, 0.15); /* Subtle white shine */
+                transition: all 0.4s ease;
+                transform: skewX(-20deg);
+                z-index: -1; /* Behind text */
+            }
+            .btn-primary:hover:after, .btn-secondary:hover:after {
+                left: 100%;
+            }
+
+            .btn-primary:hover {
+                background-color: #00e0b3; /* Slightly darker teal on hover */
+                box-shadow: 0 0 25px rgba(0, 255, 213, 0.7); /* Stronger glow */
+            }
+            .btn-secondary:hover {
+                background-color: var(--color-teal-accent);
+                color: var(--color-dark-navy);
+                box-shadow: 0 0 25px rgba(0, 255, 213, 0.7); /* Stronger glow */
+            }
+
+            /* Education Card Styles */
             .edu-card-shadow {
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2), 0 0 15px rgba(0, 255, 213, 0.1); /* Subtle glow from accent */
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2), 0 0 15px rgba(0, 255, 213, 0.1);
             }
             .edu-card-hover:hover {
                 transform: translateY(-5px);
                 box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 0 0 25px rgba(0, 255, 213, 0.2);
             }
+            
+            /* Skill Card Styles */
             .skill-card {
                 background-color: var(--color-skill-card-bg);
-                border-radius: 8px; /* Rounded corners for skill cards */
+                border-radius: 8px;
                 padding: 1.5rem;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
                 text-align: center;
-                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-                min-height: 120px; /* Ensure consistent height for cards */
+                min-height: 120px;
+                border: 1px solid transparent;
             }
             .skill-card:hover {
                 transform: translateY(-5px);
-                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3), 0 0 15px rgba(0, 255, 213, 0.2);
+                box-shadow: 0 0 20px rgba(0, 255, 213, 0.4);
+                border-color: var(--color-teal-accent);
             }
             .skill-card i {
-                font-size: 3rem; /* Larger icon size */
+                font-size: 3rem;
                 color: var(--color-teal-accent);
                 margin-bottom: 0.75rem;
             }
@@ -76,33 +158,37 @@
                 color: var(--color-text-light);
             }
             .core-competency-tag {
-                background-color: var(--color-skill-card-bg); /* Use skill card background for tags */
+                background-color: var(--color-skill-card-bg);
                 color: var(--color-text-light);
                 padding: 0.5rem 1.25rem;
-                border-radius: 9999px; /* Pill shape */
+                border-radius: 9999px;
                 font-size: 0.9rem;
                 font-weight: 500;
                 transition: background-color 0.3s ease;
-                border: 1px solid rgba(0, 255, 213, 0.2); /* Subtle border */
+                border: 1px solid rgba(0, 255, 213, 0.2);
             }
             .core-competency-tag:hover {
-                background-color: rgba(0, 255, 213, 0.1); /* Light hover effect */
+                background-color: rgba(0, 255, 213, 0.1);
             }
 
-            /* Project Card Specific Styles */
+            /* Project Card Styles with 3D Tilt */
+            .project-card-container {
+                perspective: 1000px;
+            }
             .project-card {
                 background-color: var(--color-project-card-bg);
-                border-radius: 12px; /* Slightly more rounded */
+                border-radius: 12px;
                 padding: 1.5rem;
                 box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                transition: transform 0.4s ease, box-shadow 0.4s ease;
                 display: flex;
-                flex-direction: column; /* Stack content vertically */
-                height: 100%; /* Ensure cards in a row have equal height */
+                flex-direction: column;
+                height: 100%;
+                transform-style: preserve-3d;
             }
             .project-card:hover {
-                transform: translateY(-8px);
-                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), 0 0 25px rgba(0, 255, 213, 0.2);
+                transform: rotateY(5deg) rotateX(5deg) scale(1.03);
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 255, 213, 0.3);
             }
             .project-tag {
                 background-color: var(--color-project-tag-bg);
@@ -111,27 +197,31 @@
                 padding: 0.3rem 0.7rem;
                 border-radius: 5px;
             }
+            .project-link-hover:hover {
+                color: var(--color-teal-accent);
+                transform: translateX(5px);
+            }
 
-            /* Experience Section Specific Styles */
+            /* Experience Section Specific Styles (Timeline) */
             .experience-card {
-                background-color: var(--color-card-bg); /* Reusing general card background */
+                background-color: var(--color-card-bg);
                 border-radius: 12px;
                 padding: 2rem;
                 box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
                 transition: transform 0.3s ease, box-shadow 0.3s ease;
-                position: relative; /* For the line */
-                margin-bottom: 2rem; /* Space between cards */
+                position: relative;
+                margin-bottom: 2rem;
             }
             .experience-card:hover {
                 transform: translateY(-5px);
                 box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 255, 213, 0.1);
             }
             .experience-card:last-child {
-                margin-bottom: 0; /* No margin after the last card */
+                margin-bottom: 0;
             }
             .experience-timeline {
                 position: relative;
-                padding-left: 20px; /* Space for the line */
+                padding-left: 20px;
             }
             .experience-timeline:before {
                 content: '';
@@ -140,12 +230,19 @@
                 top: 0;
                 bottom: 0;
                 width: 2px;
-                background-color: var(--color-teal-accent); /* The timeline line color */
+                background-color: var(--color-teal-accent);
             }
             .experience-point {
                 position: relative;
                 margin-bottom: 2rem;
-                padding-left: 30px; /* Space for the circle */
+                padding-left: 30px;
+                opacity: 0; /* Hidden by default for JS animation */
+                transform: translateY(20px); /* Start below for slide-up */
+                transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            }
+            .experience-point.is-visible {
+                opacity: 1;
+                transform: translateY(0);
             }
             .experience-point:last-child {
                 margin-bottom: 0;
@@ -153,60 +250,91 @@
             .experience-point:before {
                 content: '';
                 position: absolute;
-                left: -8px; /* Half of circle width to center on line */
-                top: 5px; /* Adjust to align with text */
+                left: -8px;
+                top: 5px;
                 width: 16px;
                 height: 16px;
                 border-radius: 50%;
                 background-color: var(--color-teal-accent);
-                border: 3px solid var(--color-dark-navy); /* Circle outline */
+                border: 3px solid var(--color-dark-navy);
             }
             .experience-point-details {
                 font-size: 1rem;
                 line-height: 1.6;
             }
-        }
-        /* Custom animations for fade-in and bounce effect */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in {
-            animation: fadeIn 0.6s ease-out forwards;
-            opacity: 0; /* Start invisible */
-        }
-        .animation-delay-0 { animation-delay: 0s; }
-        .animation-delay-100 { animation-delay: 0.1s; }
-        .animation-delay-200 { animation-delay: 0.2s; }
-        .animation-delay-300 { animation-delay: 0.3s; }
-        .animation-delay-400 { animation-delay: 0.4s; }
+/* 
+    
 
-        /* Custom style for the typing cursor */
-        .typing-text .typed-cursor {
-            color: var(--color-teal-accent); /* Ensure cursor color matches accent */
-            font-weight: 700;
-        }
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-        .animate-bounce {
-            animation: bounce 1.5s infinite;
-        }
+            /* Animations */
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .animate-fade-in {
+                animation: fadeIn 0.6s ease-out forwards;
+                opacity: 0;
+            }
+            .animation-delay-0 { animation-delay: 0s; }
+            .animation-delay-100 { animation-delay: 0.1s; }
+            .animation-delay-200 { animation-delay: 0.2s; }
+            .animation-delay-300 { animation-delay: 0.3s; }
+            .animation-delay-400 { animation-delay: 0.4s; }
 
-        /* Footer styling */
-        .footer-section {
-            background-color: #16162a; /* Slightly darker than main background for contrast */
-            padding: 2.5rem;
-            text-align: center;
-            font-size: 0.9rem;
-            color: var(--color-text-darker-gray);
+            /* Section Title Animation */
+            .section-title-animate {
+                opacity: 0;
+                transform: translateY(30px);
+                transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            }
+            .section-title-animate.is-visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            /* Custom style for the typing cursor */
+            .typing-text .typed-cursor {
+                color: var(--color-teal-accent);
+                font-weight: 700;
+            }
+            @keyframes bounce {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-15px); }
+            }
+            .animate-bounce {
+                animation: bounce 1.5s infinite;
+            }
+
+            /* Image reveal animation */
+            .image-animate-on-scroll {
+                opacity: 0;
+                transform: scale(0.95);
+                transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            }
+            .image-animate-on-scroll.is-visible {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            /* Canvas for particles */
+            #heroCanvas {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 0; /* Ensures it's behind content */
+            }
+            /* Content wrapper for hero section to sit above canvas */
+            #home > div:first-child { /* Targets the div containing all hero text/buttons */
+                position: relative;
+                z-index: 1;
+            }
         }
     </style>
 </head>
 <body class="overflow-x-hidden">
     <!-- Header Section -->
-    <header class="p-6 md:px-12 flex justify-center sticky top-0 z-50 bg-[var(--color-dark-navy)] bg-opacity-95 backdrop-blur-sm shadow-lg">
+    <header class="p-6 md:px-12 flex justify-center sticky top-0 z-50 header-glassmorphism shadow-lg">
         <div class="container mx-auto flex justify-between items-center max-w-7xl">
             <!-- Logo/Name -->
             <div class="text-xl md:text-2xl font-bold text-[var(--color-teal-accent)]">Kamlesh Koli</div>
@@ -222,7 +350,7 @@
             </nav>
             
             <!-- Resume Button -->
-            <a href="https://drive.google.com/file/d/10iOkdy7Wm8YMuHm_KpR_74YSnyYUnm8c/view?usp=drive_link" download class="hidden md:block border border-[var(--color-teal-accent)] text-[var(--color-teal-accent)] px-4 py-2 rounded-md font-semibold hover:bg-[var(--color-teal-accent)] hover:text-[var(--color-dark-navy)] transition-all duration-300">Resume</a>
+            <a href="https://drive.google.com/file/d/10iOkdy7Wm8YMuHm_KpR_74YSnyYUnm8c/view?usp=drive_link" download class="hidden md:block btn-secondary px-4 py-2 rounded-md font-semibold text-lg">Resume</a>
 
             <!-- Mobile Menu Icon (You'd add JavaScript to toggle a mobile menu for this) -->
             <button class="md:hidden text-2xl text-[var(--color-teal-accent)] focus:outline-none">
@@ -233,7 +361,10 @@
 
     <!-- Hero Section -->
     <main>
-        <section id="home" class="relative min-h-screen flex flex-col items-center justify-center py-16 px-4 md:px-8 lg:px-16 container mx-auto max-w-7xl text-center bg-[var(--color-deep-navy)]">
+        <section id="home" class="relative min-h-screen flex flex-col items-center justify-center py-16 px-4 md:px-8 lg:px-16 container mx-auto max-w-7xl text-center">
+            <!-- Canvas for particle background -->
+            <canvas id="heroCanvas"></canvas>
+
             <!-- Centralized Text Content -->
             <div class="w-full max-w-3xl flex flex-col items-center text-center">
                 <!-- Intro Text -->
@@ -254,10 +385,10 @@
                 
                 <!-- Action Buttons -->
                 <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mb-2 md:mb-3 animate-fade-in animation-delay-300">
-                    <a href="#projects" class="px-8 py-3 bg-[var(--color-teal-accent)] text-[var(--color-dark-navy)] rounded-lg font-semibold shadow-lg hover:bg-[#00c2a8] transition-colors duration-300 text-lg">
+                    <a href="#projects" class="px-8 py-3 rounded-lg font-semibold shadow-lg text-lg btn-primary">
                         View My Work
                     </a>
-                    <a href="https://drive.google.com/file/d/10iOkdy7Wm8YMuHm_KpR_74YSnyYUnm8c/view?usp=drive_link" download class="px-8 py-3 border border-[var(--color-teal-accent)] text-[var(--color-teal-accent)] rounded-lg font-semibold hover:bg-[var(--color-teal-accent)] hover:text-[var(--color-dark-navy)] transition-colors duration-300 text-lg">
+                    <a href="https://drive.google.com/file/d/10iOkdy7Wm8YMuHm_KpR_74YSnyYUnm8c/view?usp=drive_link" download class="px-8 py-3 rounded-lg font-semibold text-lg btn-secondary">
                         <i class="fas fa-download mr-2"></i> Download CV
                     </a>
                 </div>
@@ -287,14 +418,20 @@
     <!-- About Section -->
     <section id="about" class="min-h-screen flex flex-col items-center justify-center py-16 px-4 md:px-8 bg-[var(--color-subtle-navy)]">
         <div class="container mx-auto max-w-5xl text-center">
-            <h2 class="text-4xl md:text-5xl font-bold text-white mb-8">About Me</h2>
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-8 section-title-animate">About Me</h2>
+            
+            <!-- Image of yourself with reveal animation and duotone effect -->
+            <div class="mb-8 md:mb-12">
+                <img src="C:\Users\kamle\Desktop\portfolio\gen-ai\update_image.png" alt="Kamlesh Koli's Profile Picture" class="w-48 h-48 md:w-56 md:h-56 object-cover rounded-full mx-auto border-4 border-[var(--color-teal-accent)] shadow-lg hover:shadow-2xl transition-shadow duration-300 image-animate-on-scroll image-duotone">
+            </div>
+
             <!-- Justified text for About Me description -->
             <p class="max-w-3xl text-[var(--color-text-darker-gray)] text-lg md:text-xl text-justify leading-relaxed mb-12 mx-auto">
                 Hello! I'm <span class="highlight-text">Kamlesh Koli</span>, a dedicated Computer Engineering student at R.C. Patel Institute of Technology, Shirpur.
                 Aspiring web developer with skills in HTML, CSS, Javascript and web design using Figma. Passionate about creating responsive, user-friendly websites and improve UI/UX experience.
             </p>
 
-            <h3 class="text-3xl md:text-4xl font-bold text-[var(--color-teal-accent)] mb-8">Education</h3>
+            <h3 class="text-3xl md:text-4xl font-bold text-[var(--color-teal-accent)] mb-8 section-title-animate">Education</h3>
             <div class="flex flex-wrap justify-center gap-6 md:gap-8">
                 <!-- Education Card 1: SSC -->
                 <div class="w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(33.33%-1.5rem)] p-6 bg-[var(--color-card-bg)] rounded-xl edu-card-shadow transition-all duration-300 edu-card-hover text-left">
@@ -328,7 +465,7 @@
 
     <!-- Skills Section -->
     <section id="skills" class="min-h-screen flex flex-col items-center py-16 px-4 md:px-8 bg-[var(--color-dark-navy)]">
-        <h2 class="text-4xl md:text-5xl font-bold text-white mb-8">My Tech Arsenal</h2>
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-8 section-title-animate">My Tech Arsenal</h2>
 
         <!-- Languages Section -->
         <div class="w-full max-w-6xl mb-12">
@@ -434,124 +571,131 @@
             <div class="flex flex-wrap gap-4 justify-start">
                 <span class="core-competency-tag">Advanced Java by R3sys Ltd.Nashik</span>
                 <span class="core-competency-tag">Python Fundamentals by Great Learning</span>
-                <span class="core-competency-tag">AI Tools & ChatGPT</span>
             </div>
         </div>
     </section>
 
     <!-- Projects Section -->
     <section id="projects" class="min-h-screen flex flex-col items-center py-16 px-4 md:px-8 bg-[var(--color-dark-navy)]">
-        <h2 class="text-4xl md:text-5xl font-bold text-white mb-8">My Creations</h2>
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-8 section-title-animate">My Creations</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl">
             <!-- Project Card 1: OfferBazzar -->
-            <div class="project-card">
-                <div class="flex justify-between items-start w-full mb-4">
-                    <h3 class="text-2xl font-semibold text-white">OfferBazzar</h3>
-                    <i class="fas fa-shopping-bag text-[var(--color-teal-accent)] text-3xl"></i> <!-- Shopping bag icon -->
-                </div>
-                <p class="text-sm text-[var(--color-text-darker-gray)] mb-2">1 July 2024 - 1 August 2024 | Web Development</p>
-                <p class="text-[var(--color-text-light)] text-base leading-relaxed flex-grow mb-4">
-                    Developed a website for offers, including an admin panel, user panel, and advertiser details about products.
-                </p>
-                <div class="text-sm text-[var(--color-text-darker-gray)] mb-4">
-                    <span class="font-semibold">Tech Stack:</span>
-                    <div class="flex flex-wrap gap-2 mt-2">
-                        <span class="project-tag">HTML</span>
-                        <span class="project-tag">CSS</span>
-                        <span class="project-tag">JavaScript</span>
-                        <span class="project-tag">Java (Spring)</span>
+            <div class="project-card-container">
+                <div class="project-card">
+                    <div class="flex justify-between items-start w-full mb-4">
+                        <h3 class="text-2xl font-semibold text-white">OfferBazzar</h3>
+                        <i class="fas fa-shopping-bag text-[var(--color-teal-accent)] text-3xl"></i> <!-- Shopping bag icon -->
                     </div>
-                </div>
-                <div class="flex space-x-4 mt-auto">
-                    <a href="#" target="_blank" class="text-[var(--color-teal-accent)] hover:underline flex items-center">
-                        <i class="fab fa-github mr-2"></i>Code
-                    </a>
-                    <!-- Assuming no live link is available, but can add if you have one -->
+                    <p class="text-sm text-[var(--color-text-darker-gray)] mb-2">1 July 2024 - 1 August 2024 | Web Development</p>
+                    <p class="text-[var(--color-text-light)] text-base leading-relaxed flex-grow mb-4">
+                        Developed a website for offers, including an admin panel, user panel, and advertiser details about products.
+                    </p>
+                    <div class="text-sm text-[var(--color-text-darker-gray)] mb-4">
+                        <span class="font-semibold">Tech Stack:</span>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <span class="project-tag">HTML</span>
+                            <span class="project-tag">CSS</span>
+                            <span class="project-tag">JavaScript</span>
+                            <span class="project-tag">Java (Spring)</span>
+                        </div>
+                    </div>
+                    <div class="flex space-x-4 mt-auto">
+                        <a href="#" target="_blank" class="text-[var(--color-text-light)] hover:text-[var(--color-teal-accent)] transition-colors duration-300 project-link-hover flex items-center">
+                            <i class="fab fa-github mr-2"></i>Code
+                        </a>
+                        <!-- Assuming no live link is available, but can add if you have one -->
+                    </div>
                 </div>
             </div>
 
             <!-- Project Card 2: Inventory Management Tool -->
-            <div class="project-card">
-                <div class="flex justify-between items-start w-full mb-4">
-                    <h3 class="text-2xl font-semibold text-white">Inventory Management Tool</h3>
-                    <i class="fas fa-boxes text-[var(--color-teal-accent)] text-3xl"></i> <!-- Boxes/inventory icon -->
-                </div>
-                <p class="text-sm text-[var(--color-text-darker-gray)] mb-2">Ongoing | Java & Spring</p>
-                <p class="text-[var(--color-text-light)] text-base leading-relaxed flex-grow mb-4">
-                    Based on Java and Spring Framework, this tool allows users to manage products, categories, stock levels, and orders with features like user authentication, product tracking, and reporting.
-                </p>
-                <div class="text-sm text-[var(--color-text-darker-gray)] mb-4">
-                    <span class="font-semibold">Tech Stack:</span>
-                    <div class="flex flex-wrap gap-2 mt-2">
-                        <span class="project-tag">Java</span>
-                        <span class="project-tag">Spring Framework</span>
-                        <span class="project-tag">SQL</span>
+            <div class="project-card-container">
+                <div class="project-card">
+                    <div class="flex justify-between items-start w-full mb-4">
+                        <h3 class="text-2xl font-semibold text-white">Inventory Management Tool</h3>
+                        <i class="fas fa-boxes text-[var(--color-teal-accent)] text-3xl"></i> <!-- Boxes/inventory icon -->
                     </div>
-                </div>
-                <div class="flex space-x-4 mt-auto">
-                    <a href="#" target="_blank" class="text-[var(--color-teal-accent)] hover:underline flex items-center">
-                        <i class="fab fa-github mr-2"></i>Code
-                    </a>
+                    <p class="text-sm text-[var(--color-text-darker-gray)] mb-2">Ongoing | Java & Spring</p>
+                    <p class="text-[var(--color-text-light)] text-base leading-relaxed flex-grow mb-4">
+                        Based on Java and Spring Framework, this tool allows users to manage products, categories, stock levels, and orders with features like user authentication, product tracking, and reporting.
+                    </p>
+                    <div class="text-sm text-[var(--color-text-darker-gray)] mb-4">
+                        <span class="font-semibold">Tech Stack:</span>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <span class="project-tag">Java</span>
+                            <span class="project-tag">Spring Framework</span>
+                            <span class="project-tag">SQL</span>
+                        </div>
+                    </div>
+                    <div class="flex space-x-4 mt-auto">
+                        <a href="#" target="_blank" class="text-[var(--color-text-light)] hover:text-[var(--color-teal-accent)] transition-colors duration-300 project-link-hover flex items-center">
+                            <i class="fab fa-github mr-2"></i>Code
+                        </a>
+                    </div>
                 </div>
             </div>
 
             <!-- Project Card 3: Tourist Places in India -->
-            <div class="project-card">
-                <div class="flex justify-between items-start w-full mb-4">
-                    <h3 class="text-2xl font-semibold text-white">Tourist Places in India</h3>
-                    <i class="fas fa-map-marked-alt text-[var(--color-teal-accent)] text-3xl"></i> <!-- Map icon -->
-                </div>
-                <p class="text-sm text-[var(--color-text-darker-gray)] mb-2">Ongoing | Web Development</p>
-                <p class="text-[var(--color-text-light)] text-base leading-relaxed flex-grow mb-4">
-                    A website built using HTML, CSS, and JavaScript for the frontend, with optional Java and Spring Boot for backend. Majorly focused on user experience.
-                </p>
-                <div class="text-sm text-[var(--color-text-darker-gray)] mb-4">
-                    <span class="font-semibold">Tech Stack:</span>
-                    <div class="flex flex-wrap gap-2 mt-2">
-                        <span class="project-tag">HTML</span>
-                        <span class="project-tag">CSS</span>
-                        <span class="project-tag">JavaScript</span>
-                        <span class="project-tag">Java (Spring Boot)</span>
+            <div class="project-card-container">
+                <div class="project-card">
+                    <div class="flex justify-between items-start w-full mb-4">
+                        <h3 class="text-2xl font-semibold text-white">Tourist Places in India</h3>
+                        <i class="fas fa-map-marked-alt text-[var(--color-teal-accent)] text-3xl"></i> <!-- Map icon -->
                     </div>
-                </div>
-                <div class="flex space-x-4 mt-auto">
-                    <a href="#" target="_blank" class="text-[var(--color-teal-accent)] hover:underline flex items-center">
-                        <i class="fab fa-github mr-2"></i>Code
-                    </a>
-                    <a href="#" target="_blank" class="text-[var(--color-teal-accent)] hover:underline flex items-center">
-                        <i class="fas fa-external-link-alt mr-2"></i>Live
-                    </a>
+                    <p class="text-sm text-[var(--color-text-darker-gray)] mb-2">Ongoing | Web Development</p>
+                    <p class="text-[var(--color-text-light)] text-base leading-relaxed flex-grow mb-4">
+                        A website built using HTML, CSS, and JavaScript for the frontend, with optional Java and Spring Boot for backend. Majorly focused on user experience.
+                    </p>
+                    <div class="text-sm text-[var(--color-text-darker-gray)] mb-4">
+                        <span class="font-semibold">Tech Stack:</span>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <span class="project-tag">HTML</span>
+                            <span class="project-tag">CSS</span>
+                            <span class="project-tag">JavaScript</span>
+                            <span class="project-tag">Java (Spring Boot)</span>
+                        </div>
+                    </div>
+                    <div class="flex space-x-4 mt-auto">
+                        <a href="#" target="_blank" class="text-[var(--color-text-light)] hover:text-[var(--color-teal-accent)] transition-colors duration-300 project-link-hover flex items-center">
+                            <i class="fab fa-github mr-2"></i>Code
+                        </a>
+                        <a href="#" target="_blank" class="text-[var(--color-text-light)] hover:text-[var(--color-teal-accent)] transition-colors duration-300 project-link-hover flex items-center">
+                            <i class="fas fa-external-link-alt mr-2"></i>Live
+                        </a>
+                    </div>
                 </div>
             </div>
 
             <!-- Project Card 4: Virtual Assistance -->
-            <div class="project-card">
-                <div class="flex justify-between items-start w-full mb-4">
-                    <h3 class="text-2xl font-semibold text-white">Virtual Assistance</h3>
-                    <i class="fas fa-robot text-[var(--color-teal-accent)] text-3xl"></i> <!-- Robot/AI icon -->
-                </div>
-                <p class="text-sm text-[var(--color-text-darker-gray)] mb-2">Ongoing | Python</p>
-                <p class="text-[var(--color-text-light)] text-base leading-relaxed flex-grow mb-4">
-                    Created an assistance using Python programming language to perform various tasks, answer queries, and interact with the user.
-                </p>
-                <div class="text-sm text-[var(--color-text-darker-gray)] mb-4">
-                    <span class="font-semibold">Tech Stack:</span>
-                    <div class="flex flex-wrap gap-2 mt-2">
-                        <span class="project-tag">Python</span>
+            <div class="project-card-container">
+                <div class="project-card">
+                    <div class="flex justify-between items-start w-full mb-4">
+                        <h3 class="text-2xl font-semibold text-white">Virtual Assistance</h3>
+                        <i class="fas fa-robot text-[var(--color-teal-accent)] text-3xl"></i> <!-- Robot/AI icon -->
                     </div>
-                </div>
-                <div class="flex space-x-4 mt-auto">
-                    <a href="#" target="_blank" class="text-[var(--color-teal-accent)] hover:underline flex items-center">
-                        <i class="fab fa-github mr-2"></i>Code
-                    </a>
+                    <p class="text-sm text-[var(--color-text-darker-gray)] mb-2">Ongoing | Python</p>
+                    <p class="text-[var(--color-text-light)] text-base leading-relaxed flex-grow mb-4">
+                        Created an assistance using Python programming language to perform various tasks, answer queries, and interact with the user.
+                    </p>
+                    <div class="text-sm text-[var(--color-text-darker-gray)] mb-4">
+                        <span class="font-semibold">Tech Stack:</span>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <span class="project-tag">Python</span>
+                        </div>
+                    </div>
+                    <div class="flex space-x-4 mt-auto">
+                        <a href="#" target="_blank" class="text-[var(--color-text-light)] hover:text-[var(--color-teal-accent)] transition-colors duration-300 project-link-hover flex items-center">
+                            <i class="fab fa-github mr-2"></i>Code
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Experience Section -->
-    <section id="experience" class="min-h-screen flex flex-col items-center justify-center bg-gray-900 py-16 px-4 md:px-8">
-        <h2 class="text-4xl md:text-5xl font-bold text-white mb-8">Experience</h2>
+    <section id="experience" class="min-h-screen flex flex-col items-center justify-center py-16 px-4 md:px-8 bg-[var(--color-dark-navy)]">
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-8 section-title-animate">Experience</h2>
         <div class="w-full max-w-4xl space-y-10 relative experience-timeline">
             <!-- Timeline Line: Added via pseudo-element in CSS -->
 
@@ -587,18 +731,18 @@
 
     <!-- Contact Section -->
     <section id="contact" class="min-h-screen flex flex-col items-center justify-center bg-[var(--color-dark-navy)] py-16 px-4 md:px-8 text-center">
-        <h2 class="text-4xl md:text-5xl font-bold text-white mb-8">Get In Touch</h2>
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-8 section-title-animate">Get In Touch</h2>
         <p class="max-w-2xl text-[var(--color-text-darker-gray)] text-lg md:text-xl leading-relaxed mb-10 md:mb-12">
             I'm currently open to new opportunities and collaborations. Whether you have a project in mind, a question, or just want to say hi, my inbox is always open. I'll try my best to get back to you!
         </p>
         
-        <a href="mailto:kamleshkoli030@gmail.com" class="px-8 py-3 bg-[var(--color-teal-accent)] text-[var(--color-dark-navy)] rounded-lg font-semibold shadow-lg hover:bg-[#00c2a8] transition-colors duration-300 text-lg mb-12 md:mb-16">
+        <a href="mailto:kamleshkoli030@gmail.com" class="px-8 py-3 rounded-lg font-semibold shadow-lg text-lg btn-primary mb-12 md:mb-16">
             Say Hello
         </a>
 
         <!-- Social Media Icons (retained for consistency with hero) -->
         <div class="flex space-x-6 text-3xl text-[var(--color-text-darker-gray)] mb-8">
-            <a href="https://www.linkedin.com/in/yourlinkedinprofile" target="_blank" aria-label="LinkedIn" class="hover:text-[var(--color-teal-accent)] transition-colors duration-300">
+            <a href="https://www.linkedin.com/in/kamlesh-koli-8a288631a/" target="_blank" aria-label="LinkedIn" class="hover:text-[var(--color-teal-accent)] transition-colors duration-300">
                 <i class="fab fa-linkedin"></i>
             </a>
             <a href="https://github.com/kamleshkoli" target="_blank" aria-label="GitHub" class="hover:text-[var(--color-teal-accent)] transition-colors duration-300">
@@ -646,18 +790,69 @@
                 });
             }
 
-            // Simple fade-in animation for hero elements
+            // Simple fade-in animation for hero elements (initial load)
             const fadeInElements = document.querySelectorAll('.animate-fade-in');
             fadeInElements.forEach((el) => {
                 const delayClass = Array.from(el.classList).find(cls => cls.startsWith('animation-delay-'));
                 const delay = delayClass ? parseInt(delayClass.split('-')[2]) : 0;
                 
-                // Use a small timeout to ensure rendering before animation starts
                 setTimeout(() => {
                     el.style.opacity = '1';
                     el.style.transform = 'translateY(0)';
                 }, delay);
             });
+
+            // Intersection Observer for scroll animations (Image, Section Titles, Experience Points)
+            const observerOptions = {
+                root: null, // viewport
+                rootMargin: '0px',
+                threshold: 0.1 // 10% of element visible triggers callback
+            };
+
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.image-animate-on-scroll').forEach(el => {
+                imageObserver.observe(el);
+            });
+
+            const sectionTitleObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { root: null, rootMargin: '0px', threshold: 0.2 }); // Higher threshold for titles
+
+            document.querySelectorAll('h2.section-title-animate').forEach(el => {
+                sectionTitleObserver.observe(el);
+            });
+
+            const experiencePointObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        // No unobserve for experience points if you want them to re-animate on scroll up/down
+                        // If you want them to animate only once, uncomment the line below:
+                        // observer.unobserve(entry.target); 
+                    } else {
+                        // Optional: remove 'is-visible' if you want re-animation when scrolling back up
+                        // entry.target.classList.remove('is-visible');
+                    }
+                });
+            }, { root: null, rootMargin: '0px', threshold: 0.1 });
+
+            document.querySelectorAll('.experience-point').forEach(el => {
+                experiencePointObserver.observe(el);
+            });
+
 
             // Smooth scrolling for navigation links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -666,8 +861,13 @@
                     const targetId = this.getAttribute('href');
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
-                        targetElement.scrollIntoView({
-                            behavior: 'smooth'
+                        const headerOffset = document.querySelector('header').offsetHeight; // Get header height
+                        const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                        const offsetPosition = elementPosition - headerOffset;
+
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: "smooth"
                         });
                     }
                 });
@@ -683,7 +883,88 @@
                 }
             });
             // Initially hide the button
-            scrollUpBtn.style.display = 'none';
+            scrollUpBtn.style.display = 'none'; // Ensure it's hidden on load
+
+            // Particle Background Logic
+            const canvas = document.getElementById('heroCanvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            let animationFrameId;
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                initParticles(); // Re-initialize particles on resize
+            }
+
+            function initParticles() {
+                particles = [];
+                const numParticles = (canvas.width * canvas.height) / 9000; // Density
+                for (let i = 0; i < numParticles; i++) {
+                    particles.push(new Particle());
+                }
+            }
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 2 + 1; // 1 to 3 pixels
+                    this.speedX = Math.random() * 0.5 - 0.25; // -0.25 to 0.25
+                    this.speedY = Math.random() * 0.5 - 0.25; // -0.25 to 0.25
+                    this.color = getComputedStyle(document.documentElement).getPropertyValue('--color-particle').trim();
+                }
+
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+
+                    // Bounce off edges
+                    if (this.x < 0 || this.x > canvas.width) {
+                        this.speedX *= -1;
+                    }
+                    if (this.y < 0 || this.y > canvas.height) {
+                        this.speedY *= -1;
+                    }
+                }
+
+                draw() {
+                    ctx.fillStyle = this.color;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            function animateParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                    particles[i].draw();
+                }
+                animationFrameId = requestAnimationFrame(animateParticles);
+            }
+
+            // Start particle animation only when hero section is in view
+            const heroSection = document.getElementById('home');
+            const heroObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        if (!animationFrameId) { // Only start if not already running
+                             resizeCanvas(); // Initialize on first intersection
+                             animateParticles();
+                        }
+                    } else {
+                        if (animationFrameId) { // Stop if not intersecting
+                            cancelAnimationFrame(animationFrameId);
+                            animationFrameId = null;
+                        }
+                    }
+                });
+            }, { threshold: 0.1 }); // Trigger when 10% of hero is visible
+
+            heroObserver.observe(heroSection);
+            window.addEventListener('resize', resizeCanvas);
         });
     </script>
 </body>
